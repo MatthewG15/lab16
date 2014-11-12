@@ -9,7 +9,7 @@
 from Tkinter import *
 root = Tk()
 drawpad = Canvas(root, width=800,height=600, background='white')
-rocket1 = drawpad.create_rectangle(400,585,405,590)
+rocket1 = drawpad.create_rectangle(400,585,405,590, fill="black")
 player = drawpad.create_oval(390,580,410,600, fill="blue")
 enemy = drawpad.create_rectangle(50,50,100,60, fill="red")
 rocket1Fired = False
@@ -61,23 +61,25 @@ class myApp(object):
     def key(self,event):
         global player
         global rocket1Fired
+        x1,y1,x2,y2 = drawpad.coords(player)
         if event.char == "w":
-            drawpad.move(player,0,-4)
-            drawpad.move(rocket1,0,-4)
+            if y1 > 0:
+                drawpad.move(player,0,-4)
+                drawpad.move(rocket1,0,-4)
         elif event.char == "s":
-            drawpad.move(player,0,4)
-            drawpad.move(rocket1,0,4)  
+            if y2 < 600:
+                drawpad.move(player,0,4)
+                drawpad.move(rocket1,0,4)  
         elif event.char == "a":
-            drawpad.move(player,-4,0)
-            drawpad.move(rocket1,-4,0)
+            if x1 > 0:
+                drawpad.move(player,-4,0)
+                drawpad.move(rocket1,-4,0)
         elif event.char == "d":
-            drawpad.move(player,4,0)
-            drawpad.move(rocket1,4,0)
-        elif event.char == " ":
-            drawpad.move(player,0,0)
-            drawpad.move(rocket1,0,-4)
+            if x2 < 800:
+                drawpad.move(player,4,0)
+                drawpad.move(rocket1,4,0)
         
-            
+          
     
     def collisionDetect(self, rocket):
         rx1,ry1,rx2,ry2 = drawpad.coords(rocket)
